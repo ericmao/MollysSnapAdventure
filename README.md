@@ -1,18 +1,67 @@
-# SmileSnap Parent-Child AI Course Syllabus 😄
+# 🏊‍♀️ Molly's Swim & Smile Adventure 😄
 
-Welcome to **MollysSnapAdventure**, Molly!
+Welcome to **MollysSnapAdventure** - A Parent-Child AI Coding Journey!
 
-Hey, Molly! This is a super fun 12-week adventure starting September 7, 2025, where you and Dad will build an AI camera called **MollysSnapAdventure**! It'll spot your smiles, create cool mood cards, and share them safely on Instagram. You'll learn coding, how AI works, and how to be a smart digital citizen!
+## 🌊 Project Overview
 
-## What's the Course About?
+This is Molly's exciting 12-week swimming-themed AI adventure where she learns to code a smile-detecting camera! Together with Dad, Molly will build **MollysSnapAdventure** - an AI-powered camera that:
 
-- **Goal**: Build an AI program with Python to detect smiles, make mood cards, share on Instagram, and learn about digital safety.
-- **Time**: From September 7, 2025, to November 29, 2025, 2 hours per week:
-  - **Wednesdays** 8:00-9:00 PM
-  - **Sundays** 9:00-10:00 AM
+- 📸 Detects faces and smiles using computer vision
+- 🏊‍♀️ Creates swim-themed mood cards 
+- 📱 Shares content safely on Instagram
+- 🤖 Teaches AI concepts and digital citizenship
 
-- **Tools**: Your MacBook Air, Dad's MacBook Pro, Cursor (a smart coding tool), GitHub (like a project diary), and Instagram (for sharing).
-- **Special Features**: Weekly "Smile Show" to show off your work, plus fun discussions like "Can AI guess your mood wrong?" or "How do we keep photos safe?"
+**Course Duration**: September 7 - November 29, 2025  
+**Schedule**: Wednesdays 8-9 PM, Sundays 9-10 AM  
+**Theme**: Swimming & Water Safety meets AI Safety!
+
+## 🚀 Quick Setup
+
+### Prerequisites
+- Python 3.8+
+- MacBook with camera
+- GitHub account (private repo)
+- Instagram account (private, for safe sharing)
+
+### Installation
+```bash
+# Clone the repository
+git clone https://github.com/your-username/MollysSnapAdventure.git
+cd MollysSnapAdventure
+
+# Create virtual environment
+python -m venv .venv
+source .venv/bin/activate  # On macOS/Linux
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the app
+python src/app.py
+```
+
+## 📋 To-Do List
+
+### Week 1 (9/7-9/13): Swim & Smile Camera
+- [ ] Set up development environment
+- [ ] Code camera with pool-blue face frames
+- [ ] Draw flowchart of camera process
+- [ ] Post first IG Story
+- [ ] Earn 😄 sticker!
+
+### Week 2 (9/14-9/20): AI Mood Detection
+- [ ] Add AI mood reading
+- [ ] Create AI ethics card
+- [ ] Share mood detection demo
+- [ ] Earn 😊 sticker!
+
+### Week 3 (9/21): Save & Reflect
+- [ ] Implement photo saving
+- [ ] Write first reflection
+- [ ] Share saved photos demo
+- [ ] Earn 🌟 sticker!
+
+*More weeks coming as we progress...*
 
 ### Rewards:
 - Finish weekly tasks + Smile Show to earn stickers or emojis (like 😄)!
