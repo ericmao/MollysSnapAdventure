@@ -25,7 +25,7 @@ FRAME_THICKNESS = 3
 pool_image = None
 smile_cascade = None
 smile_counter = 0  # Counter for stable smile detection
-SMILE_THRESHOLD = 5  # Need 5 consecutive frames of smile detection (more stable)
+SMILE_THRESHOLD = 8  # Need 8 consecutive frames of smile detection (much more stable)
 
 def load_pool_image():
     """Load and prepare the swimming pool image for overlay"""
@@ -102,21 +102,21 @@ def detect_faces_and_smiles(frame):
         if smile_cascade is not None:
             smiles = smile_cascade.detectMultiScale(
                 roi_gray,
-                scaleFactor=1.5,      # Even smaller scale factor for maximum precision
-                minNeighbors=30,      # Much higher neighbor requirement for confidence
-                minSize=(40, 40),     # Larger minimum size for better accuracy
+                scaleFactor=1.3,      # Extremely small scale factor for ultra precision
+                minNeighbors=40,      # Very high neighbor requirement for maximum confidence
+                minSize=(50, 50),     # Much larger minimum size
                 flags=cv2.CASCADE_SCALE_IMAGE
             )
-            # Very strict confidence check: require multiple detections and larger smile area
+            # Extremely strict confidence check: require multiple large detections
             if len(smiles) > 0:
                 # Calculate the total area of detected smiles
                 total_smile_area = sum(w * h for (x, y, w, h) in smiles)
                 face_area = w * h
                 smile_ratio = total_smile_area / face_area
                 
-                # Much higher threshold: need at least 4% of face area to be smile
-                # AND require multiple smile detections for extra confidence
-                has_smile = (smile_ratio > 0.04 and len(smiles) >= 2) or (smile_ratio > 0.06)
+                # Ultra high threshold: need at least 6% of face area to be smile
+                # AND require multiple large smile detections for extra confidence
+                has_smile = (smile_ratio > 0.06 and len(smiles) >= 2) or (smile_ratio > 0.1)
         
         faces_with_smiles.append({
             'face': (x, y, w, h),
@@ -262,9 +262,9 @@ def main():
     
     print("\nInstructions:")
     print("- Look at the camera and watch the pool-blue frames!")
-    print("- SMILE VERY BIG and HOLD IT STEADY to see the swimming pool!")
-    print("- Need a HUGE smile for several seconds to trigger pool effect!")
-    print("- Yellow frame = smile detected, Green frame = confirmed BIG smile!")
+    print("- SMILE EXTREMELY BIG and HOLD STEADY for 8+ seconds!")
+    print("- Need an ENORMOUS, SUSTAINED smile to trigger pool effect!")
+    print("- Yellow frame = smile detected, Green frame = CONFIRMED MEGA SMILE!")
     print("- Press 's' to save a photo")
     print("- Press 'q' to quit")
     print("\nHave fun swimming with AI!")
@@ -290,14 +290,20 @@ def main():
             if current_smiles > 0:
                 smile_counter += 1
             else:
-                smile_counter = max(0, smile_counter - 2)  # Faster decrease when no smile
+                smile_counter = max(0, smile_counter - 3)  # Even faster decrease when no smile
             
             # Only show pool effect if we have very stable smile detection
             stable_smile_detected = smile_counter >= SMILE_THRESHOLD
             
-            # Additional check: reset counter if no faces detected at all
+            # Additional checks: reset counter in various scenarios
             if len(faces_data) == 0:
                 smile_counter = 0
+            
+            # If we haven't seen a smile for a while, reset completely
+            if smile_counter > 0 and current_smiles == 0:
+                # After 2 frames without smile, start aggressive reset
+                if smile_counter < SMILE_THRESHOLD:
+                    smile_counter = max(0, smile_counter - 2)  # Double reduction
             
             # Update faces_data with stable smile information
             for face_data in faces_data:
