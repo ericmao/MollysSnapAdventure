@@ -22,14 +22,14 @@ FRAME_THICKNESS = 3
 
 def setup_camera():
     """Initialize the camera for our swim & smile adventure!"""
-    print("🏊‍♀️ Starting Molly's Swim & Smile Camera...")
+    print("Starting Molly's Swim & Smile Camera...")
     cap = cv2.VideoCapture(0)
     
     if not cap.isOpened():
-        print("❌ Oops! Camera not found. Check your camera connection!")
+        print("Oops! Camera not found. Check your camera connection!")
         return None
     
-    print("📸 Camera ready! Let's detect some faces!")
+    print("Camera ready! Let's detect some faces!")
     return cap
 
 def detect_faces(frame):
@@ -63,7 +63,7 @@ def draw_pool_blue_frame(frame, faces):
         cv2.rectangle(frame, (x, y), (x + w, y + h), POOL_BLUE, FRAME_THICKNESS)
         
         # Add a fun "Swimming with AI!" label
-        label_text = "Swimming with AI! 🏊‍♀️"
+        label_text = "Swimming with AI!"
         label_size = cv2.getTextSize(label_text, cv2.FONT_HERSHEY_SIMPLEX, 0.6, 2)[0]
         
         # Position label above the face frame
@@ -87,7 +87,7 @@ def add_swim_info(frame):
     height, width = frame.shape[:2]
     
     # Add title
-    title = "Molly's Swim & Smile Adventure 🏊‍♀️"
+    title = "Molly's Swim & Smile Adventure"
     cv2.putText(frame, title, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, POOL_BLUE, 2)
     
     # Add instructions
@@ -103,7 +103,7 @@ def save_photo(frame, photo_count):
     
     filename = f"outputs/swim_smile_{photo_count:03d}.jpg"
     cv2.imwrite(filename, frame)
-    print(f"📸 Splash! Photo saved as {filename}")
+    print(f"Splash! Photo saved as {filename}")
     return photo_count + 1
 
 def main():
@@ -111,7 +111,7 @@ def main():
     Main function - Let's start our swim & smile adventure!
     This is where Molly's AI journey begins! 🌊
     """
-    print("🏊‍♀️ Welcome to Molly's Swim & Smile Adventure!")
+    print("Welcome to Molly's Swim & Smile Adventure!")
     print("=" * 50)
     
     # Initialize camera
@@ -121,18 +121,18 @@ def main():
     
     photo_count = 1
     
-    print("\n📋 Instructions:")
+    print("\nInstructions:")
     print("- Look at the camera and watch the pool-blue frames!")
     print("- Press 's' to save a photo")
     print("- Press 'q' to quit")
-    print("\nHave fun swimming with AI! 🌊")
+    print("\nHave fun swimming with AI!")
     
     try:
         while True:
             # Capture frame from camera
             ret, frame = cap.read()
             if not ret:
-                print("❌ Failed to capture frame. Check camera!")
+                print("Failed to capture frame. Check camera!")
                 break
             
             # Flip frame horizontally for mirror effect
@@ -148,25 +148,25 @@ def main():
             frame = add_swim_info(frame)
             
             # Show the result
-            cv2.imshow("Molly's Swim & Smile Camera 🏊‍♀️", frame)
+            cv2.imshow("Molly's Swim & Smile Camera", frame)
             
             # Handle keyboard input
             key = cv2.waitKey(1) & 0xFF
             
             if key == ord('q'):
-                print("\n🏊‍♀️ Thanks for swimming with AI! See you next time!")
+                print("\n Thanks for swimming with AI! See you next time!")
                 break
             elif key == ord('s'):
                 photo_count = save_photo(frame, photo_count)
     
     except KeyboardInterrupt:
-        print("\n🏊‍♀️ Camera stopped. Thanks for the swim!")
+        print("\n Camera stopped. Thanks for the swim!")
     
     finally:
         # Clean up
         cap.release()
         cv2.destroyAllWindows()
-        print("🌊 Camera closed. Keep swimming with code!")
+        print("Camera closed. Keep swimming with code!")
 
 if __name__ == "__main__":
     main()
