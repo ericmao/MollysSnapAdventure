@@ -25,7 +25,7 @@ FRAME_THICKNESS = 3
 pool_image = None
 smile_cascade = None
 smile_counter = 0  # Counter for stable smile detection
-SMILE_THRESHOLD = 3  # Need 3 consecutive frames of smile detection
+SMILE_THRESHOLD = 5  # Need 5 consecutive frames of smile detection (more stable)
 
 def load_pool_image():
     """Load and prepare the swimming pool image for overlay"""
@@ -97,25 +97,26 @@ def detect_faces_and_smiles(frame):
         # Extract the face region
         roi_gray = gray[y:y+h, x:x+w]
         
-        # Detect smiles in this face region with stricter parameters
+        # Detect smiles in this face region with very strict parameters
         has_smile = False
         if smile_cascade is not None:
             smiles = smile_cascade.detectMultiScale(
                 roi_gray,
-                scaleFactor=1.7,      # Smaller scale factor for more precise detection
-                minNeighbors=22,      # Higher neighbor requirement for confidence
-                minSize=(30, 30),     # Larger minimum size for better accuracy
+                scaleFactor=1.5,      # Even smaller scale factor for maximum precision
+                minNeighbors=30,      # Much higher neighbor requirement for confidence
+                minSize=(40, 40),     # Larger minimum size for better accuracy
                 flags=cv2.CASCADE_SCALE_IMAGE
             )
-            # Additional confidence check: require multiple detections or larger smile area
+            # Very strict confidence check: require multiple detections and larger smile area
             if len(smiles) > 0:
                 # Calculate the total area of detected smiles
                 total_smile_area = sum(w * h for (x, y, w, h) in smiles)
                 face_area = w * h
                 smile_ratio = total_smile_area / face_area
                 
-                # Only consider it a smile if the ratio is significant enough
-                has_smile = smile_ratio > 0.02  # At least 2% of face area should be smile
+                # Much higher threshold: need at least 4% of face area to be smile
+                # AND require multiple smile detections for extra confidence
+                has_smile = (smile_ratio > 0.04 and len(smiles) >= 2) or (smile_ratio > 0.06)
         
         faces_with_smiles.append({
             'face': (x, y, w, h),
@@ -261,8 +262,9 @@ def main():
     
     print("\nInstructions:")
     print("- Look at the camera and watch the pool-blue frames!")
-    print("- SMILE BIG and HOLD IT to see the swimming pool appear!")
-    print("- Yellow frame = smile detected, Green frame = confirmed smile!")
+    print("- SMILE VERY BIG and HOLD IT STEADY to see the swimming pool!")
+    print("- Need a HUGE smile for several seconds to trigger pool effect!")
+    print("- Yellow frame = smile detected, Green frame = confirmed BIG smile!")
     print("- Press 's' to save a photo")
     print("- Press 'q' to quit")
     print("\nHave fun swimming with AI!")
@@ -281,17 +283,21 @@ def main():
             # Detect faces and smiles in the frame
             faces_data = detect_faces_and_smiles(frame)
             
-            # Check for stable smile detection
+            # Check for stable smile detection with stricter logic
             global smile_counter
             current_smiles = sum(1 for face_data in faces_data if face_data['has_smile'])
             
             if current_smiles > 0:
                 smile_counter += 1
             else:
-                smile_counter = max(0, smile_counter - 1)  # Gradually decrease counter
+                smile_counter = max(0, smile_counter - 2)  # Faster decrease when no smile
             
-            # Only show pool effect if we have stable smile detection
+            # Only show pool effect if we have very stable smile detection
             stable_smile_detected = smile_counter >= SMILE_THRESHOLD
+            
+            # Additional check: reset counter if no faces detected at all
+            if len(faces_data) == 0:
+                smile_counter = 0
             
             # Update faces_data with stable smile information
             for face_data in faces_data:
