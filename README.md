@@ -2,10 +2,7 @@
 
 <!-- Demo Animation -->
 <div align="center">
-  <video width="800" controls autoplay muted loop>
-    <source src="assets/demo-animation.mp4" type="video/mp4">
-    您的瀏覽器不支援影片標籤。
-  </video>
+  <img src="assets/demo-animation.gif" alt="MollysSnapAdventure 演示動畫" width="600">
 </div>
 
 Welcome to **MollysSnapAdventure** - A Parent-Child AI Coding Journey!
