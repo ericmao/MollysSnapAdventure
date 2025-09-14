@@ -1,5 +1,13 @@
 # 🏊‍♀️ Molly's Swim & Smile Adventure 😄
 
+<!-- Demo Animation -->
+<div align="center">
+  <video width="800" controls autoplay muted loop>
+    <source src="assets/demo-animation.mp4" type="video/mp4">
+    您的瀏覽器不支援影片標籤。
+  </video>
+</div>
+
 Welcome to **MollysSnapAdventure** - A Parent-Child AI Coding Journey!
 
 ## 🌊 Project Overview
@@ -98,7 +106,8 @@ python src/app.py
 #### 📅 9/7 - 9/13 (9/7 Sun, 9/10 Wed): Open Camera, Draw Face Frame
 
 **What Molly Does:**
-- Use Cursor to write code that shows the MacBook camera feed and draws a pink frame around faces (you pick the color!).
+- Use Cursor to l
+    
 - Draw a simple flowchart (like "Camera → Frame → Done").
 
 **What Dad Does:** Open a GitHub Issue, teach you how to run code.
